@@ -12,7 +12,7 @@ db.once('open', () => {
 
 //Check errors
 db.on('error', error => {
-  console.log('error: ', error);
+  console.log('errora: ', error);
   
 });
 
@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //home route
 app.get('/', (req, res) => {
   Article.find({}, (err, articles) => {
-    if (err) console.log('err: ', err);    
+    if (err) console.log('errs: ', err);    
     else {
       res.render('index', {
         title: 'Hello',
@@ -49,7 +49,7 @@ app.get('/', (req, res) => {
 //Get single article
 app.get('/article/:id', (req, res) => {
   Article.findById(req.params.id, (err, article) => {
-    if (err) console.log('err: ', err);
+    if (err) console.log('errd: ', err);
     else {
       res.render('article', {
         article: article
@@ -59,22 +59,50 @@ app.get('/article/:id', (req, res) => {
 });
 
 //add route
-app.get('/article/add', (req, res) => {
+app.get('/articles/add', (req, res) => {
   res.render('add', {
     title: 'Add Article'
   });
 });
 
 //Add submit Post route
-app.post('/article/add', (req, res) => {
+app.post('/articles/add', (req, res) => {
   let article = new Article();
   article.title = req.body.title;
   article.author = req.body.author;
   article.body = req.body.body;
 
   article.save( err => {
-    if(err) console.log('err: ', err);
+    if(err) console.log('errf: ', err);
     else res.redirect('/');
+  });
+});
+
+//Update submit Post route
+app.post('/articles/edit/:id', (req, res) => {
+  let article = {};
+  article.title = req.body.title;
+  article.author = req.body.author;
+  article.body = req.body.body;
+
+  let query = {_id:req.params.id}
+
+  Article.update(query, article, err => {
+    if(err) console.log('errf: ', err);
+    else res.redirect('/');
+  });
+});
+
+//Load edit article
+app.get('/article/edit/:id', (req, res) => {
+  Article.findById(req.params.id, (err, article) => {
+    if (err) console.log('errg: ', err);
+    else {
+      res.render('edit_article', {
+        title: 'Edit Article',
+        article: article
+      });
+    }
   });
 });
 
