@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= "Add a movie."
+  form(method='POST', action='/movies/add')
+    #form-group
+      label Title:
+      input.form-control(name='title', type='text')
+    #form-group
+      label Type:
+      input.form-control(name='type', type='text')
+    #form-group
+      label Price:
+      textarea.form-control(name='price')
+      br
+    input.btn.btn-primary(type='submit', value='Submit')

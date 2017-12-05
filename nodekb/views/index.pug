@@ -1,8 +1,12 @@
 extends layout
 
 block content
-  h1 #{title}
+  h1= 'All Categories'
   ul.list-group
-    each article, i in articles
-      li.list-group-item
-        a(href="/articles/"+article._id)= article.title
+    li.list-group-item
+      a(href="/movies/all")= "Movies"
+    li.list-group-item
+      a(href="/articles/all")= "Articles"
+        
+  
+  

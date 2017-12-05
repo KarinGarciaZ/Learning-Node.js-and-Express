@@ -5,6 +5,19 @@ const router = express.Router();
 let Article = require('../models/article');
 
 //add route
+router.get('/all', (req, res) => {
+  Article.find({}, (err, articles) => {
+    if (err) console.log('errs: ', err);    
+    else {
+      res.render('allArticles', {
+        titleA: 'Articles',
+        articles: articles
+      });
+    }    
+  });   
+});
+
+//add route
 router.get('/add', (req, res) => {
   res.render('add', {
     title: 'Add Article'
@@ -13,6 +26,7 @@ router.get('/add', (req, res) => {
 
 //Add submit Post route
 router.post('/add', (req, res) => {
+  
   req.checkBody('title', 'Title is required.').notEmpty();
   req.checkBody('author', 'Author is required.').notEmpty();
   req.checkBody('body', 'Body is required.').notEmpty();

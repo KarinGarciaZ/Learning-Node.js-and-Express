@@ -24,6 +24,7 @@ const app = express();
 
 //Bring in models
 let Article = require('./models/article');
+let Movie = require('./models/movie');
 
 //load view engine
 app.set('views', path.join(__dirname,'views'));
@@ -68,21 +69,15 @@ app.use(expressValidator({
 }));
 
 //home route
-app.get('/', (req, res) => {
-  Article.find({}, (err, articles) => {
-    if (err) console.log('errs: ', err);    
-    else {
-      res.render('index', {
-        title: 'Hello',
-        articles: articles
-      });
-    }    
-  });  
+app.get('/', (req, res) => { 
+  res.render('index');
 });
 
 //Route files
 let articles = require('./routes/articles');
 app.use('/articles', articles);
+let movies = require('./routes/movies');
+app.use('/movies', movies);
  
 //start server
 app.listen(2999, () => {
