@@ -25,6 +25,7 @@ const app = express();
 //Bring in models
 let Article = require('./models/article');
 let Movie = require('./models/movie');
+let Anime = require('./models/anime');
 
 //load view engine
 app.set('views', path.join(__dirname,'views'));
@@ -78,6 +79,8 @@ let articles = require('./routes/articles');
 app.use('/articles', articles);
 let movies = require('./routes/movies');
 app.use('/movies', movies);
+let animes = require('./routes/animes');
+app.use('/animes', animes);
  
 //start server
 app.listen(2999, () => {

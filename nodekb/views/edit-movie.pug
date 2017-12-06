@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= "Edit a movie."
+  form(method='POST', action='/movies/edit/'+movie._id)
+    #form-group
+      label Title:
+      input.form-control(name='title', type='text' value=movie.title)
+    #form-group
+      label Type:
+      input.form-control(name='type', type='text' value=movie.type)
+    #form-group
+      label Price:
+      input.form-control(name='price' type='text' value=movie.price)
+      br
+    input.btn.btn-primary(type='submit', value='Submit')

@@ -31,10 +31,48 @@ router.post('/add', (req, res) => {
   movie.type = req.body.type;
   movie.price = req.body.price;
 
-  movie.save( () => {
-    res.redirect('/');
-  })
+  movie.save( err => {
+    if (err) console.log('err: ', err);    
+    else res.redirect('/');
+  });
+});
 
-})
+router.get('/:id', (req, res) => {
+  Movie.findById(req.params.id, (err, movie) => {
+    res.render('showMovie', {
+      movie: movie
+    }); 
+  });
+});
+
+router.get('/edit/:id', (req, res) => {
+  Movie.findById(req.params.id, (err, movie) => {
+    res.render('edit-movie', {
+      movie: movie
+    }); 
+  });
+});
+
+router.post('/edit/:id', (req, res) => {
+  let movie = {};
+  movie.title = req.body.title;
+  movie.type = req.body.type;
+  movie.price = req.body.price;
+
+  let query = {_id:req.params.id};
+
+  Movie.update(query, movie, err => {
+    if (err) console.log('err: ', err);    
+    else res.redirect('/');
+  })
+});
+
+router.delete('delete/:id', (req, res) => {
+  let query = {_id:req.params.id};
+
+  Movie.remove(query, () => {
+    res.redirect('/');
+  });  
+});
 
 module.exports = router;
