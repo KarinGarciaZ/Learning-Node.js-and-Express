@@ -25,6 +25,14 @@ router.post('/add', (req, res) => {
   anime.caps = req.body.caps;
 
   anime.save();
-})
+});
+
+router.get('/:id', (req, res) => {
+  Anime.findById(req.params.id, (err, anime) => {
+    res.render('showAnime', {
+      anime
+    });
+  });  
+});
 
 module.exports = router;
